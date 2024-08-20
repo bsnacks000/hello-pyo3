@@ -21,5 +21,3 @@ do
         exit 3 
     fi
 done 
-
-fi
