@@ -8,14 +8,14 @@ else
 fi
 
 # Get an array for both tarball and whl
-targetfiles=($(cd dist && ls | grep '.tar.gz\|.whl'))
+targetfiles=($(cd /dist && ls | grep '.tar.gz\|.whl'))
 
 if [[ ${#targetfiles[@]} -eq 2 ]]; then
     cd dist
     for target in "${targetfiles[@]}" 
     do
         echo "Publishing $target ... "
-        curl -i -F package=@$target https://$token@push.fury.io/cunybpl/ --fail
+        curl -i -F package=@$target https://$token@push.fury.io/bsnacks000/ --fail
         statuscode=$?
         if [[ $statuscode != 0 ]]; then 
             echo "Error: Curl could not upload the package"
