@@ -10,7 +10,8 @@ fi
 
 ls -la
 
-# Get an array for both tarball and whl
+# CI prints wheels in artificats and moves them into this folder
+
 
 $targetfiles=($(find ./wheel* -type f -name "*.whl"))
 
