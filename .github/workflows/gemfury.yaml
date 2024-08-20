@@ -75,9 +75,17 @@ jobs:
       - uses: actions/download-artifact@v4
 
       - name: Deploy package to GemFury
-        run: |
-          export GEMFURY_PUSH_TOKEN=${{ secrets.GEMFURY_PUSH_TOKEN }} 
-          "${GITHUB_WORKSPACE}/.github/publish.sh"
+        uses: PyO3/maturin-action@v1
+        env:
+          MATURIN_PYPI_TOKEN: $ {{ secrets.GEMFURY_PUSH_TOKEN }}
+          MATURIN_REPOSITORY_URL: https://gemfury.io/bsnacks000/hello-pyo3
+        with:
+          command: upload
+          args: --non-interactive --skip-existing wheels-*/*
+
+        # run: |
+        #   export GEMFURY_PUSH_TOKEN=${{ secrets.GEMFURY_PUSH_TOKEN }}
+        #   "${GITHUB_WORKSPACE}/.github/publish.sh"
 
   # release:
   #   name: Release
