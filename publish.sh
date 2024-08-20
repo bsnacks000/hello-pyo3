@@ -13,7 +13,7 @@ ls -la
 # CI prints wheels in artificats and moves them into this folder
 
 
-$targetfiles=($(find ./wheel* -type f -name "*.whl"))
+$targetfiles=($(find './wheels-*' -type f -name '*.whl'))
 
 for target in "${targetfiles[@]}" 
 do
