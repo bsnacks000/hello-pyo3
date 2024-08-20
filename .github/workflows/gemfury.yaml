@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: wheels-linux-${{ matrix.platform.target }}
-          path: ${GITHUB_WORKSPACE}/dist
+          path: dist
 
   sdist:
     runs-on: ubuntu-latest
@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: wheels-sdist
-          path: ${GITHUB_WORKSPACE}/dist
+          path: dist
 
   release:
     runs-on: ubuntu-latest
