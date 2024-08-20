@@ -76,7 +76,8 @@ jobs:
 
       - name: Deploy package to GemFury
         uses: PyO3/maturin-action@v1
-        env: TOKEN=${{ secrets.GEMFURY_DEPLOY_TOKEN }}
+        env:
+          TOKEN: ${{ secrets.GEMFURY_DEPLOY_TOKEN }}
         with:
           command: upload
           args: --non-interactive --skip-existing wheels-*/* --repository-url='https://${TOKEN}@pypi.fury.io/bsnacks000/'
