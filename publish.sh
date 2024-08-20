@@ -10,11 +10,10 @@ fi
 
 ls -la
 
-Get an array for both tarball and whl
-targetfiles=($(cd dist && ls | grep '.tar.gz\|.whl'))
+# Get an array for both tarball and whl
 
+$targetfiles=($(find ./wheel* -type f -name "*.whl"))
 
-cd dist
 for target in "${targetfiles[@]}" 
 do
     echo "Publishing $target ... "
