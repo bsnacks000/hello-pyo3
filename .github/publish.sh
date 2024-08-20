@@ -11,7 +11,7 @@ fi
 targetfiles=($(cd /dist && ls | grep '.tar.gz\|.whl'))
 
 if [[ ${#targetfiles[@]} -eq 2 ]]; then
-    cd dist
+    cd /dist
     for target in "${targetfiles[@]}" 
     do
         echo "Publishing $target ... "
