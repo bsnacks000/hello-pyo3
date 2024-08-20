@@ -65,7 +65,8 @@ jobs:
           path: dist
 
   release:
-    runs-on: alpine/curl:8.1.2
+    runs-on: ubuntu-latest
+    container: alpine/curl:8.1.2
     #if: "startsWith(github.ref, 'refs/tags/')"
     needs: [linux, sdist]
     steps:
