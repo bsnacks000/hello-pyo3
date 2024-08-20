@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.x
+          python-version: 3.12
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
@@ -49,20 +49,20 @@ jobs:
           name: wheels-linux-${{ matrix.platform.target }}
           path: dist
 
-  # sdist:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Build sdist
-  #       uses: PyO3/maturin-action@v1
-  #       with:
-  #         command: sdist
-  #         args: --out dist
-  #     - name: Upload sdist
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: wheels-sdist
-  #         path: dist
+  sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build sdist
+        uses: PyO3/maturin-action@v1
+        with:
+          command: sdist
+          args: --out dist
+      - name: Upload sdist
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-sdist
+          path: dist
 
   release:
     runs-on: ubuntu-latest
@@ -73,11 +73,23 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v4
+        with:
+          pattern: wheels-
+          merge-multiple: true
+          path: dist
 
-      - name: Upload to Gem Fury
-        run: |
-          export GEMFURY_PUSH_TOKEN=${{ secrets.GEMFURY_PUSH_TOKEN }}
-          "${GITHUB_WORKSPACE}/publish.sh"
+      - name: Install Twine
+        run: pip install -U twine
+
+      - name: Upload to GemFury
+        env:
+          GEMFURY_PUSH_TOKEN: ${{ secrets.GEMFURY_PUSH_TOKEN }}
+        run: twine upload dist/* --repository-url https://push.fury.io/bsnacks000 -u $GEMFURY_PUSH_TOKEN -p "" --verbose
+
+      # - name: Upload to Gem Fury
+      #   run: |
+      #     export GEMFURY_PUSH_TOKEN=${{ secrets.GEMFURY_PUSH_TOKEN }}
+      #     "${GITHUB_WORKSPACE}/publish.sh"
 
   # release:
   #   name: Release
