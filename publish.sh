@@ -10,10 +10,8 @@ fi
 
 ls -la
 
-# CI prints wheels in artificats and moves them into this folder
-
-
-$targetfiles=($(find './wheels-*' -type f -name '*.whl'))
+# CI prints wheels in artificats. The output dirs are all starting with wheels-
+targetfiles=$(find wheels-* -type f -name "*.whl")
 
 for target in "${targetfiles[@]}" 
 do
