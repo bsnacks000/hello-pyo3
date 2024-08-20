@@ -1,4 +1,5 @@
 #!/bin/bash 
+set -e
 
 if [[ -z "${GEMFURY_PUSH_TOKEN}" ]]; then
   echo "Error: Must supply Gemfury push token"
@@ -7,10 +8,12 @@ else
   token="${GEMFURY_PUSH_TOKEN}"
 fi
 
-# Get an array for both tarball and whl
-targetfiles=($(cd /dist && ls | grep '.tar.gz\|.whl'))
+ls -la
 
-cd /dist
+# Get an array for both tarball and whl
+targetfiles=($(cd dist && ls | grep '.tar.gz\|.whl'))
+
+cd dist
 for target in "${targetfiles[@]}" 
 do
     echo "Publishing $target ... "
